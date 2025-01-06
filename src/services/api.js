@@ -51,14 +51,14 @@ export const fetchEvents = async () => {
   // Filter events
   export const filterEvents = async (filterData) => {
     let filterStr = "?"
-    if(filterData.location && !filterData.data){
+    if(filterData.location !== "" && filterData.date === ""){
         filterStr += "location="+filterData.location
     }
-    else if(!filterData.location && filterData.data){
-        filterStr += "data="+filterData.date
+    else if(!filterData.location === "" && filterData.date !== ""){
+        filterStr += "date="+filterData.date
     }
     else{
-        filterStr += "location="+filterData.location +'&'+ "data=" + filterData.date
+        filterStr += "location="+filterData.location +'&'+ "date=" + filterData.date
     }
     const response = await fetch('http://127.0.0.1:8000/api/events/filter/' + filterStr, {
       method: 'GET',
@@ -78,7 +78,7 @@ export const fetchEvents = async () => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     return await response.json();
   };
   
